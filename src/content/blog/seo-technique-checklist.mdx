@@ -1,0 +1,173 @@
+---
+title: "SEO Technique : la checklist complète pour 2026"
+excerpt: "Balises meta, Core Web Vitals, données structurées, sitemap... Tout ce que vous devez vérifier pour que votre site soit parfaitement optimisé pour Google en 2026."
+date: "2026-02-20"
+category: "seo"
+author: "Kaelix"
+---
+
+## Pourquoi le SEO technique est-il crucial en 2026 ?
+
+Vous pouvez avoir le meilleur contenu du monde : si votre site est techniquement défaillant, Google ne le classera jamais en première page. Le SEO technique est le **socle invisible** sur lequel repose toute votre stratégie de référencement.
+
+En 2026, les exigences de Google sont plus strictes que jamais. Les Core Web Vitals sont devenus un facteur de classement majeur, l'indexation mobile-first est la norme, et les données structurées conditionnent l'accès aux rich snippets.
+
+Voici la checklist complète pour ne rien oublier.
+
+## 1. Fondamentaux techniques
+
+### Protocole HTTPS
+
+- Certificat SSL valide et à jour
+- Redirection automatique HTTP vers HTTPS
+- Pas de contenu mixte (ressources HTTP sur page HTTPS)
+
+> En 2026, un site sans HTTPS est pénalisé par Google et affiche un avertissement dans Chrome. C'est non négociable.
+
+### Robots.txt et Sitemap XML
+
+- Fichier `robots.txt` accessible à la racine
+- Directives correctes (pas de `Disallow: /` involontaire)
+- Sitemap XML référencé dans le `robots.txt`
+- Sitemap à jour avec toutes les pages importantes
+- Soumission du sitemap dans Google Search Console
+
+### Vitesse de chargement
+
+- **TTFB** (Time to First Byte) inférieur à 600 ms
+- **LCP** (Largest Contentful Paint) inférieur à 2,5 secondes
+- **INP** (Interaction to Next Paint) inférieur à 200 ms
+- **CLS** (Cumulative Layout Shift) inférieur à 0,1
+
+## 2. Balises HTML essentielles
+
+### Title et Meta Description
+
+Chaque page doit avoir :
+
+- Une balise `<title>` unique (50-60 caractères)
+- Une meta description unique (120-160 caractères)
+- Le mot-clé principal dans le title, idéalement au début
+- Un appel à l'action dans la meta description
+
+### Balises Heading
+
+- **Un seul `<h1>` par page**, contenant le mot-clé principal
+- Hiérarchie logique : H1 > H2 > H3 (pas de saut de niveau)
+- Mots-clés secondaires dans les H2 et H3
+- Headings descriptifs (pas de « En savoir plus » ou « Section 1 »)
+
+### Balises Open Graph et Twitter Cards
+
+- `og:title`, `og:description`, `og:image` sur chaque page
+- `og:type` : « website » pour les pages, « article » pour les articles
+- `twitter:card` : « summary_large_image » pour un affichage optimal
+- Image OG au format 1200x630 pixels
+
+## 3. Structure et architecture
+
+### URLs propres
+
+- URLs courtes et descriptives : `/blog/seo-technique-checklist`
+- Pas de paramètres inutiles : éviter `?id=123&cat=4`
+- Tirets comme séparateurs (pas d'underscores)
+- Tout en minuscules
+- Pas d'accents ni de caractères spéciaux
+
+### Maillage interne
+
+- Chaque page importante accessible en **3 clics maximum** depuis l'accueil
+- Liens contextuels entre articles liés
+- Breadcrumbs (fil d'Ariane) sur toutes les pages
+- Ancres de liens descriptives (pas de « cliquez ici »)
+
+### Canonical et Hreflang
+
+- Balise `<link rel="canonical">` sur chaque page
+- Éviter le contenu dupliqué entre URLs (avec/sans trailing slash, avec/sans www)
+- Balises `hreflang` si site multilingue
+
+## 4. Performance et Core Web Vitals
+
+### Optimisation des images
+
+- Format moderne : WebP ou AVIF
+- Attributs `width` et `height` définis (évite le CLS)
+- Lazy loading pour les images hors viewport
+- Compression adaptée (qualité 75-85 % pour le web)
+- Images responsive avec `srcset`
+
+### Optimisation du code
+
+- **CSS critique inliné** dans le `<head>`
+- JavaScript différé ou asynchrone (`defer` / `async`)
+- Code splitting : charger uniquement le JS nécessaire
+- Minification du HTML, CSS et JavaScript
+- Suppression du code mort (unused CSS/JS)
+
+### Infrastructure
+
+- Hébergement sur un **CDN mondial** (Vercel, Cloudflare)
+- Compression Brotli ou Gzip activée
+- Cache HTTP configuré correctement (`Cache-Control`, `ETag`)
+- HTTP/2 ou HTTP/3 activé
+
+## 5. Données structurées (Schema.org)
+
+### Les schemas essentiels
+
+- **Organization** : nom, logo, coordonnées, réseaux sociaux
+- **LocalBusiness** : adresse, horaires, zone de service
+- **BreadcrumbList** : fil d'Ariane pour chaque page
+- **Article** : pour les articles de blog (auteur, date, éditeur)
+- **FAQ** : pour les pages avec questions/réponses
+- **Service** : pour les pages de services
+
+### Validation
+
+- Tester avec l'outil [Rich Results Test](https://search.google.com/test/rich-results) de Google
+- Vérifier dans Google Search Console > Améliorations
+- Pas d'erreurs ni d'avertissements dans le rapport
+
+## 6. Mobile et accessibilité
+
+### Mobile-first
+
+- Design responsive sur tous les breakpoints
+- Texte lisible sans zoom (taille minimale 16 px)
+- Boutons et liens suffisamment espacés (zone de tap 48x48 px minimum)
+- Pas de contenu masqué sur mobile qui serait visible sur desktop
+- Viewport meta tag correctement configuré
+
+### Accessibilité (a11y)
+
+- Attributs `alt` sur toutes les images
+- Contraste suffisant entre texte et fond (ratio 4.5:1 minimum)
+- Navigation possible au clavier
+- Attributs ARIA sur les éléments interactifs
+- Labels sur tous les champs de formulaire
+
+## 7. Monitoring et outils
+
+### Outils indispensables
+
+- **Google Search Console** : indexation, erreurs, performances de recherche
+- **Google Analytics 4** : trafic, comportement utilisateur
+- **PageSpeed Insights** : Core Web Vitals en conditions réelles
+- **Screaming Frog** : audit technique complet (crawl)
+- **Ahrefs / Semrush** : suivi de positionnement et backlinks
+
+### Vérifications régulières
+
+- Vérifier les erreurs d'exploration dans Search Console (hebdomadaire)
+- Surveiller les Core Web Vitals (mensuel)
+- Auditer les liens cassés (mensuel)
+- Vérifier l'indexation des nouvelles pages (à chaque publication)
+
+## Conclusion
+
+Le SEO technique n'est pas un one-shot : c'est un processus continu qui demande rigueur et expertise. Cette checklist couvre l'essentiel, mais chaque site a ses spécificités.
+
+**L'avantage d'un site codé à la main ?** La plupart de ces optimisations sont intégrées dès la conception. Pas besoin de plugins, pas de configuration complexe. Le code est écrit pour performer, dès le premier jour.
+
+Besoin d'un audit SEO technique de votre site actuel ? Nous analysons votre site et vous livrons un rapport détaillé avec des recommandations actionnables.
