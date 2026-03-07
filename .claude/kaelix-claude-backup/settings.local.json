@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__github__get_me",
+      "Bash(sudo chown:*)",
+      "mcp__github__get_file_contents",
+      "mcp__github__create_or_update_file",
+      "mcp__supabase__list_projects",
+      "Bash(git -C /Users/mamani/Documents/Projets/kaelix-agency status)",
+      "mcp__github__create_repository",
+      "mcp__github__push_files",
+      "mcp__shadcn__list_items_in_registries"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase",
+    "next-devtools",
+    "playwright"
+  ],
+  "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+}
