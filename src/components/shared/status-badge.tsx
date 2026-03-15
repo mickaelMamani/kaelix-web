@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 const projectStatusConfig = {
+  pending: { label: "En attente", variant: "outline" as const, className: "border-amber-500 text-amber-600" },
   discovery: { label: "Découverte", variant: "secondary" as const },
   proposal: { label: "Proposition", variant: "secondary" as const },
   design: { label: "Design", variant: "outline" as const },

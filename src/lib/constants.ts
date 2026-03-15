@@ -67,6 +67,24 @@ export const clientNavItems = [
   { label: "Profil", href: "/profile", icon: "User" },
 ]
 
+export const adminNavItems = [
+  { label: "Dashboard", href: "/admin/dashboard", icon: "LayoutDashboard" },
+  { label: "Utilisateurs", href: "/admin/users", icon: "Users" },
+  { label: "Projets", href: "/admin/projects", icon: "FolderKanban" },
+  { label: "Facturation", href: "/admin/billing", icon: "CreditCard" },
+]
+
+export const PROJECT_STATUS_PROGRESS: Record<string, number> = {
+  pending: 0,
+  discovery: 10,
+  proposal: 20,
+  design: 40,
+  development: 65,
+  review: 85,
+  launched: 100,
+  maintenance: 100,
+}
+
 export const serviceSlugs = [
   "site-vitrine",
   "site-ecommerce",

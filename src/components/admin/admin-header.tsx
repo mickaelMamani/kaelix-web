@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LogOut, User, Shield } from "lucide-react"
+import { LogOut, User, ArrowLeft } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -12,10 +12,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { clientNavItems } from "@/lib/constants"
+import { adminNavItems } from "@/lib/constants"
 
-interface ClientHeaderProps {
-  user: { fullName: string; email: string; avatarUrl?: string; isAdmin?: boolean }
+interface AdminHeaderProps {
+  user: { fullName: string; email: string; avatarUrl?: string }
 }
 
 function getInitials(name: string): string {
@@ -28,13 +28,13 @@ function getInitials(name: string): string {
 }
 
 function getPageTitle(pathname: string): string {
-  const navItem = clientNavItems.find(
+  const navItem = adminNavItems.find(
     (item) => pathname === item.href || pathname.startsWith(item.href + "/")
   )
-  return navItem?.label ?? "Dashboard"
+  return navItem?.label ?? "Administration"
 }
 
-export function ClientHeader({ user }: ClientHeaderProps) {
+export function AdminHeader({ user }: AdminHeaderProps) {
   const pathname = usePathname()
   const pageTitle = getPageTitle(pathname)
 
@@ -43,7 +43,7 @@ export function ClientHeader({ user }: ClientHeaderProps) {
       <h1 className="text-lg font-semibold text-foreground">{pageTitle}</h1>
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+        <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-kaelix-blue focus-visible:ring-offset-2">
           <Avatar size="sm">
             {user.avatarUrl && <AvatarImage src={user.avatarUrl} alt={user.fullName} />}
             <AvatarFallback>{getInitials(user.fullName)}</AvatarFallback>
@@ -54,12 +54,10 @@ export function ClientHeader({ user }: ClientHeaderProps) {
             <User className="size-4" />
             Mon Profil
           </DropdownMenuItem>
-          {user.isAdmin && (
-            <DropdownMenuItem render={<Link href="/admin/dashboard" />}>
-              <Shield className="size-4" />
-              Administration
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuItem render={<Link href="/dashboard" />}>
+            <ArrowLeft className="size-4" />
+            Espace Client
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" onClick={() => {
             const form = document.createElement("form")

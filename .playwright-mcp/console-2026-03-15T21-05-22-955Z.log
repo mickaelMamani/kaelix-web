@@ -1,0 +1,58 @@
+[   10831ms] [ERROR] %o
+
+%s Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?35:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?36:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) The above error occurred in the <AdminUsersPage> component. It was handled by the <ErrorBoundaryHandler> error boundary. @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1342
+[   10831ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at GlobalError (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:277:231)
+    at ErrorBoundaryHandler.render (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1086:55)
+    at ErrorBoundary (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1103:50)
+    at OuterLayoutRouter (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_be32b49c._.js:598:55) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   10832ms] [ERROR] [GlobalError] Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?35:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?36:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   10832ms] [ERROR] [GlobalError] Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?35:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?36:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  298842ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=fFMEZ7T2rkrO88ljGgant' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  299845ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=fFMEZ7T2rkrO88ljGgant' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  417134ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  418139ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  419144ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  420149ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  421153ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  426157ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  431163ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  436168ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  441173ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  446178ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  451183ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878
+[  456188ms] [ERROR] WebSocket connection to 'ws://10.230.38.15:3000/_next/webpack-hmr?id=z5GWfktjMF2dZHeV47Iom' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:10878

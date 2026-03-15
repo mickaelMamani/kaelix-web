@@ -1,5 +1,7 @@
 // Auto-generated from Supabase schema — project xjbpucxoyokvduyhlulk
 
+export type UserRole = "client" | "admin"
+
 export type ProjectType =
   | "site-vitrine"
   | "site-ecommerce"
@@ -9,6 +11,7 @@ export type ProjectType =
   | "maintenance"
 
 export type ProjectStatus =
+  | "pending"
   | "discovery"
   | "proposal"
   | "design"
@@ -28,6 +31,7 @@ export interface Profile {
   address: string | null
   city: string | null
   country: string | null
+  role: UserRole
   stripe_customer_id: string | null
   notification_project_emails: boolean | null
   notification_invoice_alerts: boolean | null
@@ -48,6 +52,8 @@ export interface Project {
   budget: string | null
   start_date: string | null
   due_date: string | null
+  admin_id: string | null
+  started_at: string | null
   created_at: string
   updated_at: string
 }

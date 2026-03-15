@@ -12,14 +12,6 @@
       "mcp__shadcn__list_items_in_registries"
     ]
   },
-  "extraKnownMarketplaces": {
-    "saas-toolkit": {
-      "source": {
-        "source": "github",
-        "repo": "mickaelMamani/saas-toolkit"
-      }
-    }
-  },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "supabase",

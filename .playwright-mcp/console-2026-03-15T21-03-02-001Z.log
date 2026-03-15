@@ -1,0 +1,120 @@
+[   67413ms] [ERROR] %o
+
+%s Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?193:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?194:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) The above error occurred in the <AdminUsersPage> component. It was handled by the <ErrorBoundaryHandler> error boundary. @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1342
+[   67415ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at GlobalError (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:277:231)
+    at ErrorBoundaryHandler.render (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1086:55)
+    at ErrorBoundary (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1103:50)
+    at OuterLayoutRouter (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_be32b49c._.js:598:55) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   67416ms] [ERROR] [GlobalError] Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?193:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?194:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   67416ms] [ERROR] [GlobalError] Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?193:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?194:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69194ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at Navbar (http://10.230.38.15:3000/_next/static/chunks/src_e3b243c4._.js:2173:227)
+    at PublicLayout (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/_a6438e43._.js?232:624:264) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69197ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at HeroSection (http://10.230.38.15:3000/_next/static/chunks/src_308a1210._.js:297:231)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?383:1910:264) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69198ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at HeroSection (http://10.230.38.15:3000/_next/static/chunks/src_308a1210._.js:322:231)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?383:1910:264) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69198ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at ProblemSolution (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?272:582:282)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?244:1929:278) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69199ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at PricingPreview (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?315:1035:282)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?292:1954:278) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69199ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at ShowcasesSection (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?334:1230:282)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?319:1966:278) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69202ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at CtaSection (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?377:156:276)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?372:2014:278) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[   69202ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at CtaSection (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?378:172:276)
+    at HomePage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__aa8bd426._.js?372:2014:278) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  108045ms] [ERROR] %o
+
+%s Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?136:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?137:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) The above error occurred in the <AdminUsersPage> component. It was handled by the <ErrorBoundaryHandler> error boundary. @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1342
+[  108049ms] [ERROR] Base UI: A component that acts as a button expected a native <button> because the `nativeButton` prop is true. Rendering a non-<button> removes native button semantics, which can impact forms and accessibility. Use a real <button> in the `render` prop, or set `nativeButton` to `false`.
+    at Button (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:47:214)
+    at GlobalError (http://10.230.38.15:3000/_next/static/chunks/_9058aba4._.js:277:231)
+    at ErrorBoundaryHandler.render (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1086:55)
+    at ErrorBoundary (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_client_17643121._.js:1103:50)
+    at OuterLayoutRouter (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_be32b49c._.js:598:55) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  108049ms] [ERROR] [GlobalError] Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?136:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?137:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
+[  108049ms] [ERROR] [GlobalError] Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at createAdminClient (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?136:43:208)
+    at AdminUsersPage (about://React/Server/file:///Users/mamani/Documents/Projets/kaelix-web/.next/dev/server/chunks/ssr/%5Broot-of-the-server%5D__d679b988._.js?137:556:180)
+    at resolveErrorDev (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:1894:148)
+    at processFullStringRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2402:29)
+    at processFullBinaryRow (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2361:9)
+    at processBinaryChunk (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2470:221)
+    at progress (http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js:2640:13) @ http://10.230.38.15:3000/_next/static/chunks/node_modules_next_dist_f3530cac._.js:3127
