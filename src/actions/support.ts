@@ -62,14 +62,6 @@ export async function sendSupportMessage(
     projectName = project?.name ?? undefined
   }
 
-  // Fetch user's org_id via org_members
-  const { data: orgMember } = await supabase
-    .from("org_members")
-    .select("org_id")
-    .eq("user_id", user.id)
-    .limit(1)
-    .single()
-
   // Send to Teams with formatted message
   try {
     await sendToTeams({
@@ -91,19 +83,16 @@ export async function sendSupportMessage(
     console.error("Failed to send support message to Teams")
   }
 
-  // Log to activity_log if org found
-  if (orgMember?.org_id) {
-    try {
-      await supabase.from("activity_log").insert({
-        org_id: orgMember.org_id,
-        project_id: projectId ?? null,
-        user_id: user.id,
-        action: "support_message",
-        description: sujetLabel,
-      })
-    } catch {
-      console.error("Failed to log support message to activity_log")
-    }
+  // Log to activity_log
+  try {
+    await supabase.from("activity_log").insert({
+      project_id: projectId ?? null,
+      user_id: user.id,
+      action: "support_message",
+      description: sujetLabel,
+    })
+  } catch {
+    console.error("Failed to log support message to activity_log")
   }
 
   return {

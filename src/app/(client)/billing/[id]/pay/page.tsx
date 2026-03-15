@@ -1,6 +1,5 @@
 import { notFound, redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
-import { getUserOrganization } from "@/lib/queries/organizations"
 import { getInvoice } from "@/lib/queries/billing"
 import { PageHeader } from "@/components/shared/page-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -27,14 +26,7 @@ export default async function PaymentPage({
     redirect("/auth/login")
   }
 
-  const userOrg = await getUserOrganization(user.id)
-
-  if (!userOrg) {
-    redirect("/dashboard")
-  }
-
-  const orgId = userOrg.organization.id
-  const invoice = await getInvoice(id, orgId)
+  const invoice = await getInvoice(id, user.id)
 
   if (!invoice) {
     notFound()

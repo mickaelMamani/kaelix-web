@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
-import { getUserOrganization } from "@/lib/queries/organizations"
 import {
   getBillingSummary,
   getInvoices,
@@ -26,19 +25,11 @@ export default async function BillingPage() {
     redirect("/auth/login")
   }
 
-  const userOrg = await getUserOrganization(user.id)
-
-  if (!userOrg) {
-    redirect("/dashboard")
-  }
-
-  const orgId = userOrg.organization.id
-
   // Fetch billing data in parallel
   const [summary, invoices, paymentMethods] = await Promise.all([
-    getBillingSummary(orgId),
-    getInvoices(orgId),
-    getPaymentMethods(orgId),
+    getBillingSummary(user.id),
+    getInvoices(user.id),
+    getPaymentMethods(user.id),
   ])
 
   return (
@@ -61,10 +52,7 @@ export default async function BillingPage() {
           <InvoicesTab invoices={invoices} />
         </TabsContent>
         <TabsContent value="payment-methods" className="mt-6">
-          <PaymentMethodsTab
-            paymentMethods={paymentMethods}
-            orgId={orgId}
-          />
+          <PaymentMethodsTab paymentMethods={paymentMethods} />
         </TabsContent>
       </Tabs>
     </div>

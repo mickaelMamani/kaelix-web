@@ -3,7 +3,6 @@ import { redirect } from "next/navigation"
 import { FolderOpen } from "lucide-react"
 
 import { getProfile } from "@/lib/queries/profiles"
-import { getUserOrganization } from "@/lib/queries/organizations"
 import { getProjects } from "@/lib/queries/projects"
 import { getRecentActivity } from "@/lib/queries/activity"
 import { WelcomeHeader } from "@/components/client/dashboard/welcome-header"
@@ -28,18 +27,11 @@ export default async function DashboardPage() {
   }
 
   // Fetch data in parallel
-  const [profile, userOrg] = await Promise.all([
+  const [profile, projects, activities] = await Promise.all([
     getProfile(user.id),
-    getUserOrganization(user.id),
+    getProjects(user.id),
+    getRecentActivity(user.id, 5),
   ])
-
-  // Fetch org-dependent data if organization exists
-  const [projects, activities] = userOrg
-    ? await Promise.all([
-        getProjects(userOrg.organization.id),
-        getRecentActivity(userOrg.organization.id, 5),
-      ])
-    : [[], []]
 
   return (
     <div className="space-y-6">
@@ -49,7 +41,7 @@ export default async function DashboardPage() {
 
       {projects.length === 0 ? (
         <EmptyState
-          icon={FolderOpen}
+          icon={<FolderOpen className="h-8 w-8 text-muted-foreground" />}
           title="Aucun projet pour le moment"
           description="Vous n'avez pas encore de projet en cours. Contactez-nous pour démarrer votre premier projet."
           actionLabel="Demander un devis"

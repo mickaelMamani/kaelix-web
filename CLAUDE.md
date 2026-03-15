@@ -50,12 +50,13 @@ src/
 - `updated_at` géré automatiquement par triggers
 
 ### Schéma DB (public)
-- `profiles` — Profils utilisateurs (FK auth.users)
-- `organizations` — Organisations/entreprises clients
-- `org_members` — Membres d'organisation (role: owner/admin/member)
-- `projects` — Projets clients (type enum, status enum, progress 0-100)
-- `deliverables` — Livrables de projet
-- `activity_log` — Journal d'activité
+- `profiles` — Profils utilisateurs (FK auth.users, stripe_customer_id)
+- `projects` — Projets clients (user_id FK, type enum, status enum, progress 0-100)
+- `deliverables` — Livrables de projet (project_id FK)
+- `invoices` — Factures (user_id FK, stripe_invoice_id)
+- `payment_methods` — Moyens de paiement (user_id FK, stripe_payment_method_id)
+- `activity_log` — Journal d'activité (user_id FK)
+- Modèle mono-utilisateur : pas d'organizations/org_members, `user_id` directement sur toutes les tables
 
 ### Style
 - Couleurs: `#0A0A0A` (noir), `#FFFFFF` (blanc), `#0066FF` (bleu), `#00D46A` (vert)

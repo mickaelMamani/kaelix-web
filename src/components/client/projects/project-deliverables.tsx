@@ -43,7 +43,7 @@ export function ProjectDeliverables({ deliverables }: ProjectDeliverablesProps) 
   if (deliverables.length === 0) {
     return (
       <EmptyState
-        icon={ClipboardList}
+        icon={<ClipboardList className="h-8 w-8 text-muted-foreground" />}
         title="Aucun livrable"
         description="Les livrables de ce projet n'ont pas encore été définis."
       />

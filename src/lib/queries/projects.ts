@@ -1,13 +1,13 @@
 import { createClient } from "@/lib/supabase/server"
 import type { Project, Deliverable } from "@/types"
 
-export async function getProjects(orgId: string): Promise<Project[]> {
+export async function getProjects(userId: string): Promise<Project[]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase
     .from("projects")
     .select("*")
-    .eq("org_id", orgId)
+    .eq("user_id", userId)
     .order("created_at", { ascending: false })
 
   if (error || !data) {

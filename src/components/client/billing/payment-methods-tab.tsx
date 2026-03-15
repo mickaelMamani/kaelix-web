@@ -39,12 +39,10 @@ function getCardBrandDisplay(brand: string | null): string {
 
 interface PaymentMethodsTabProps {
   paymentMethods: PaymentMethod[]
-  orgId: string
 }
 
 export function PaymentMethodsTab({
   paymentMethods,
-  orgId,
 }: PaymentMethodsTabProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -79,7 +77,7 @@ export function PaymentMethodsTab({
   if (paymentMethods.length === 0) {
     return (
       <EmptyState
-        icon={CreditCard}
+        icon={<CreditCard className="h-8 w-8 text-muted-foreground" />}
         title="Aucune m\u00e9thode de paiement"
         description="Vous n'avez pas encore ajout\u00e9 de m\u00e9thode de paiement. Ajoutez une carte pour faciliter vos paiements."
       />

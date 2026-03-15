@@ -35,10 +35,10 @@ export default function ClientPortalError({
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button onClick={reset}>Réessayer</Button>
-            <Button render={<Link href="/dashboard" />}>
+            <Button nativeButton={false} render={<Link href="/dashboard" />}>
               Retour au dashboard
             </Button>
-            <Button variant="outline" render={<Link href="/support" />}>
+            <Button variant="outline" nativeButton={false} render={<Link href="/support" />}>
               Contacter le support
             </Button>
           </div>

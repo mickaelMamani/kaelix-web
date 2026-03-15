@@ -7,7 +7,6 @@ import {
   setDefaultPaymentMethod as setDefaultPM,
   detachPaymentMethod as detachPM,
 } from "@/lib/stripe/payment-methods"
-import { getUserOrganization } from "@/lib/queries/organizations"
 
 export type BillingActionState = {
   error?: string
@@ -23,7 +22,6 @@ export async function createPaymentIntent(
 ): Promise<BillingActionState> {
   const supabase = await createClient()
 
-  // Auth check
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -32,20 +30,12 @@ export async function createPaymentIntent(
     return { error: "Vous devez être connecté" }
   }
 
-  // Get user's organization
-  const userOrg = await getUserOrganization(user.id)
-  if (!userOrg) {
-    return { error: "Organisation introuvable" }
-  }
-
-  const orgId = userOrg.organization.id
-
-  // Fetch invoice and verify org ownership
+  // Fetch invoice and verify user ownership
   const { data: invoice, error: invoiceError } = await supabase
     .from("invoices")
     .select("*")
     .eq("id", invoiceId)
-    .eq("org_id", orgId)
+    .eq("user_id", user.id)
     .single()
 
   if (invoiceError || !invoice) {
@@ -60,11 +50,18 @@ export async function createPaymentIntent(
     return { error: "Le montant de la facture est invalide" }
   }
 
+  // Fetch profile for name
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", user.id)
+    .single()
+
   // Get or create Stripe customer
   const stripeCustomerId = await getOrCreateStripeCustomer(
-    orgId,
+    user.id,
     user.email!,
-    userOrg.organization.name
+    profile?.full_name ?? user.email!
   )
 
   // Create PaymentIntent
@@ -74,7 +71,7 @@ export async function createPaymentIntent(
     customer: stripeCustomerId,
     metadata: {
       invoice_id: invoiceId,
-      org_id: orgId,
+      user_id: user.id,
     },
   })
 
@@ -87,12 +84,9 @@ export async function createPaymentIntent(
 /**
  * Creates a Stripe SetupIntent so the client can add a new payment method.
  */
-export async function addPaymentMethod(
-  orgId: string
-): Promise<BillingActionState> {
+export async function addPaymentMethod(): Promise<BillingActionState> {
   const supabase = await createClient()
 
-  // Auth check
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -101,17 +95,18 @@ export async function addPaymentMethod(
     return { error: "Vous devez être connecté" }
   }
 
-  // Verify user belongs to the org
-  const userOrg = await getUserOrganization(user.id)
-  if (!userOrg || userOrg.organization.id !== orgId) {
-    return { error: "Accès non autorisé" }
-  }
+  // Fetch profile for name
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", user.id)
+    .single()
 
   // Get or create Stripe customer
   const stripeCustomerId = await getOrCreateStripeCustomer(
-    orgId,
+    user.id,
     user.email!,
-    userOrg.organization.name
+    profile?.full_name ?? user.email!
   )
 
   // Create SetupIntent
@@ -134,7 +129,6 @@ export async function removePaymentMethod(
 ): Promise<BillingActionState> {
   const supabase = await createClient()
 
-  // Auth check
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -143,20 +137,12 @@ export async function removePaymentMethod(
     return { error: "Vous devez être connecté" }
   }
 
-  // Get user's organization
-  const userOrg = await getUserOrganization(user.id)
-  if (!userOrg) {
-    return { error: "Organisation introuvable" }
-  }
-
-  const orgId = userOrg.organization.id
-
-  // Verify the payment method belongs to this org
+  // Verify the payment method belongs to this user
   const { data: pm, error: pmError } = await supabase
     .from("payment_methods")
     .select("stripe_payment_method_id")
     .eq("id", paymentMethodId)
-    .eq("org_id", orgId)
+    .eq("user_id", user.id)
     .single()
 
   if (pmError || !pm) {
@@ -173,14 +159,13 @@ export async function removePaymentMethod(
 }
 
 /**
- * Sets a payment method as the default for the organization.
+ * Sets a payment method as the default for the user.
  */
 export async function setDefaultPaymentMethod(
   paymentMethodId: string
 ): Promise<BillingActionState> {
   const supabase = await createClient()
 
-  // Auth check
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -189,20 +174,12 @@ export async function setDefaultPaymentMethod(
     return { error: "Vous devez être connecté" }
   }
 
-  // Get user's organization
-  const userOrg = await getUserOrganization(user.id)
-  if (!userOrg) {
-    return { error: "Organisation introuvable" }
-  }
-
-  const orgId = userOrg.organization.id
-
-  // Verify the payment method belongs to this org
+  // Verify the payment method belongs to this user
   const { data: pm, error: pmError } = await supabase
     .from("payment_methods")
     .select("stripe_payment_method_id")
     .eq("id", paymentMethodId)
-    .eq("org_id", orgId)
+    .eq("user_id", user.id)
     .single()
 
   if (pmError || !pm) {
@@ -210,7 +187,7 @@ export async function setDefaultPaymentMethod(
   }
 
   // Get the Stripe customer ID
-  const stripeCustomerId = await getStripeCustomerId(orgId)
+  const stripeCustomerId = await getStripeCustomerId(user.id)
   if (!stripeCustomerId) {
     return { error: "Client Stripe introuvable" }
   }

@@ -2,52 +2,53 @@ import { stripe } from "./client"
 import { createClient } from "@/lib/supabase/server"
 
 /**
- * Returns an existing Stripe customer ID for the org, or creates a new one.
+ * Returns an existing Stripe customer ID for the user, or creates a new one.
+ * Uses profiles.stripe_customer_id directly.
  */
 export async function getOrCreateStripeCustomer(
-  orgId: string,
+  userId: string,
   email: string,
   name: string
 ): Promise<string> {
   const supabase = await createClient()
 
-  // Check if mapping already exists
-  const { data: existing } = await supabase
-    .from("stripe_customers")
+  // Check if profile already has a Stripe customer ID
+  const { data: profile } = await supabase
+    .from("profiles")
     .select("stripe_customer_id")
-    .eq("org_id", orgId)
+    .eq("id", userId)
     .single()
 
-  if (existing) return existing.stripe_customer_id
+  if (profile?.stripe_customer_id) return profile.stripe_customer_id
 
   // Create Stripe customer
   const customer = await stripe.customers.create({
     email,
     name,
-    metadata: { org_id: orgId },
+    metadata: { user_id: userId },
   })
 
-  // Store mapping in local DB
-  await supabase.from("stripe_customers").insert({
-    org_id: orgId,
-    stripe_customer_id: customer.id,
-  })
+  // Store on profile
+  await supabase
+    .from("profiles")
+    .update({ stripe_customer_id: customer.id })
+    .eq("id", userId)
 
   return customer.id
 }
 
 /**
- * Returns the Stripe customer ID for an org, or null if not found.
+ * Returns the Stripe customer ID for a user, or null if not found.
  */
 export async function getStripeCustomerId(
-  orgId: string
+  userId: string
 ): Promise<string | null> {
   const supabase = await createClient()
 
   const { data } = await supabase
-    .from("stripe_customers")
+    .from("profiles")
     .select("stripe_customer_id")
-    .eq("org_id", orgId)
+    .eq("id", userId)
     .single()
 
   return data?.stripe_customer_id ?? null

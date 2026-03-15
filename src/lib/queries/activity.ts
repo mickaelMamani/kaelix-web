@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import type { ActivityLog } from "@/types"
 
 export async function getRecentActivity(
-  orgId: string,
+  userId: string,
   limit: number = 5
 ): Promise<ActivityLog[]> {
   const supabase = await createClient()
@@ -10,7 +10,7 @@ export async function getRecentActivity(
   const { data, error } = await supabase
     .from("activity_log")
     .select("*")
-    .eq("org_id", orgId)
+    .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .limit(limit)
 

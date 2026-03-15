@@ -25,7 +25,7 @@ const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>
 
 interface SidebarProps {
   user: { fullName: string; email: string; avatarUrl?: string }
-  organizationName?: string
+  companyName?: string
 }
 
 function getInitials(name: string): string {
@@ -37,7 +37,7 @@ function getInitials(name: string): string {
     .slice(0, 2)
 }
 
-export function Sidebar({ user, organizationName }: SidebarProps) {
+export function Sidebar({ user, companyName }: SidebarProps) {
   const pathname = usePathname()
 
   return (
@@ -57,8 +57,8 @@ export function Sidebar({ user, organizationName }: SidebarProps) {
         </Avatar>
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium text-foreground">{user.fullName}</p>
-          {organizationName && (
-            <p className="truncate text-xs text-muted-foreground">{organizationName}</p>
+          {companyName && (
+            <p className="truncate text-xs text-muted-foreground">{companyName}</p>
           )}
         </div>
       </div>

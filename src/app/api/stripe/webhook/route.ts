@@ -38,20 +38,20 @@ function mapInvoiceStatus(
 }
 
 /**
- * Resolves the local org_id from a Stripe customer ID.
+ * Resolves the local user_id from a Stripe customer ID via profiles.stripe_customer_id.
  */
-async function getOrgIdFromCustomer(
+async function getUserIdFromCustomer(
   stripeCustomerId: string
 ): Promise<string | null> {
   const supabase = createAdminClient()
 
   const { data } = await supabase
-    .from("stripe_customers")
-    .select("org_id")
+    .from("profiles")
+    .select("id")
     .eq("stripe_customer_id", stripeCustomerId)
     .single()
 
-  return data?.org_id ?? null
+  return data?.id ?? null
 }
 
 /**
@@ -65,14 +65,14 @@ async function upsertInvoice(invoice: Stripe.Invoice): Promise<void> {
 
   if (!customerId) return
 
-  const orgId = await getOrgIdFromCustomer(customerId)
-  if (!orgId) return
+  const userId = await getUserIdFromCustomer(customerId)
+  if (!userId) return
 
   const supabase = createAdminClient()
 
   await supabase.from("invoices").upsert(
     {
-      org_id: orgId,
+      user_id: userId,
       stripe_invoice_id: invoice.id,
       amount: invoice.amount_due ?? 0,
       currency: invoice.currency ?? "eur",
@@ -146,10 +146,10 @@ export async function POST(request: Request) {
             : invoice.customer?.id ?? null
 
         if (customerId) {
-          const orgId = await getOrgIdFromCustomer(customerId)
-          if (orgId) {
+          const userId = await getUserIdFromCustomer(customerId)
+          if (userId) {
             await supabase.from("activity_log").insert({
-              org_id: orgId,
+              user_id: userId,
               action: "invoice_paid",
               description: `Facture ${invoice.number ?? invoice.id} payée — ${((invoice.amount_due ?? 0) / 100).toFixed(2)} ${(invoice.currency ?? "eur").toUpperCase()}`,
             })
@@ -162,7 +162,6 @@ export async function POST(request: Request) {
       case "invoice.payment_failed": {
         const invoice = event.data.object as Stripe.Invoice
 
-        // Keep the invoice open for retry
         await supabase
           .from("invoices")
           .update({
@@ -198,14 +197,14 @@ export async function POST(request: Request) {
 
         if (!customerId) break
 
-        const orgId = await getOrgIdFromCustomer(customerId)
-        if (!orgId) break
+        const userId = await getUserIdFromCustomer(customerId)
+        if (!userId) break
 
         const type = paymentMethod.type === "sepa_debit" ? "sepa" : "card"
 
         await supabase.from("payment_methods").upsert(
           {
-            org_id: orgId,
+            user_id: userId,
             stripe_payment_method_id: paymentMethod.id,
             type,
             brand:
@@ -244,7 +243,6 @@ export async function POST(request: Request) {
         console.log(`Unhandled Stripe event type: ${event.type}`)
     }
   } catch (err) {
-    // Log the error but still return 200 to avoid Stripe retries
     const message = err instanceof Error ? err.message : "Unknown error"
     console.log(`Error processing webhook event ${event.type}: ${message}`)
   }

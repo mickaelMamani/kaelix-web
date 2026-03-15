@@ -34,7 +34,7 @@ export function InvoicesTab({ invoices }: InvoicesTabProps) {
   if (invoices.length === 0) {
     return (
       <EmptyState
-        icon={FileText}
+        icon={<FileText className="h-8 w-8 text-muted-foreground" />}
         title="Aucune facture"
         description="Vous n'avez pas encore de facture. Les factures appara\u00eetront ici une fois qu'elles auront \u00e9t\u00e9 \u00e9mises."
       />

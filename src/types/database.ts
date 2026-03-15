@@ -37,27 +37,9 @@ export interface Profile {
   updated_at: string
 }
 
-export interface Organization {
-  id: string
-  name: string
-  slug: string
-  stripe_customer_id: string | null
-  created_at: string
-  updated_at: string
-}
-
-export interface OrgMember {
-  id: string
-  org_id: string
-  user_id: string
-  role: string
-  created_at: string
-  updated_at: string
-}
-
 export interface Project {
   id: string
-  org_id: string
+  user_id: string
   name: string
   description: string | null
   type: ProjectType
@@ -84,9 +66,8 @@ export interface Deliverable {
 
 export interface ActivityLog {
   id: string
-  org_id: string
   project_id: string | null
-  user_id: string | null
+  user_id: string
   action: string
   description: string | null
   created_at: string
@@ -100,7 +81,7 @@ export type PaymentMethodType = "card" | "sepa"
 
 export interface Invoice {
   id: string
-  org_id: string
+  user_id: string
   project_id: string | null
   stripe_invoice_id: string | null
   amount: number
@@ -115,7 +96,7 @@ export interface Invoice {
 
 export interface PaymentMethod {
   id: string
-  org_id: string
+  user_id: string
   stripe_payment_method_id: string
   type: PaymentMethodType
   brand: string | null
@@ -123,12 +104,5 @@ export interface PaymentMethod {
   exp_month: number | null
   exp_year: number | null
   is_default: boolean
-  created_at: string
-}
-
-export interface StripeCustomer {
-  id: string
-  org_id: string
-  stripe_customer_id: string
   created_at: string
 }

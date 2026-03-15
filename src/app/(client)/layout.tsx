@@ -19,31 +19,12 @@ export default async function ClientLayout({
     redirect("/auth/login")
   }
 
-  // Fetch user profile
+  // Fetch user profile (includes company name)
   const { data: profile } = await supabase
     .from("profiles")
-    .select("full_name, avatar_url")
+    .select("full_name, avatar_url, company")
     .eq("id", user.id)
     .single()
-
-  // Fetch organization name
-  const { data: membership } = await supabase
-    .from("org_members")
-    .select("organizations(name)")
-    .eq("user_id", user.id)
-    .limit(1)
-    .single()
-
-  const organizations = membership?.organizations as
-    | { name: string }
-    | { name: string }[]
-    | null
-
-  const orgName = organizations
-    ? Array.isArray(organizations)
-      ? organizations[0]?.name
-      : organizations.name
-    : undefined
 
   const userData = {
     fullName: profile?.full_name ?? user.email?.split("@")[0] ?? "Utilisateur",
@@ -53,7 +34,7 @@ export default async function ClientLayout({
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar user={userData} organizationName={orgName} />
+      <Sidebar user={userData} companyName={profile?.company ?? undefined} />
       <div className="flex flex-1 flex-col">
         <ClientHeader user={userData} />
         <main className="flex-1 bg-gray-50 p-4 pb-20 lg:p-6 lg:pb-6">

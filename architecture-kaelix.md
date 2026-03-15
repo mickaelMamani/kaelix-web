@@ -86,6 +86,8 @@ Le site Kaelix se compose de deux espaces distincts avec des objectifs compléme
 
 Le site public a pour mission de convertir les visiteurs en leads qualifiés. L'architecture est conçue autour de trois piliers : **pages de conversion** (transformer), **pages piliers SEO** (attirer), et **pages locales/sectorielles** (cibler).
 
+> **Accès Espace Client :** La navbar du site public inclut un bouton "Espace Client" permettant aux clients existants de se connecter et d'accéder directement à leur portail (dashboard, projets, facturation). Ce bouton est présent sur toutes les pages publiques. Si le client est déjà connecté, le bouton se transforme en menu utilisateur avec accès direct aux différentes sections du portail.
+
 #### Pages principales
 
 | Route | Page | Objectif |
@@ -562,11 +564,20 @@ Page de gestion du compte utilisateur avec trois onglets, conforme à la documen
 
 L'authentification est gérée par Supabase Auth avec support OAuth Google. L'inscription se fait sur invitation uniquement (le client reçoit un lien d'accès après signature de contrat).
 
+**Point d'entrée principal :** Le bouton "Espace Client" dans la navbar du site public permet aux clients de se connecter depuis n'importe quelle page du site vitrine. Ce bouton redirige vers `/auth/login`.
+
 | Page | Fonctionnalités |
 |------|-----------------|
 | Login (`/auth/login`) | Connexion email/password + OAuth Google. Redirection vers `/dashboard` après connexion. |
 | Register (`/auth/register`) | Création de compte via lien d'invitation. Prénom, Nom, Email (pré-rempli), Mot de passe. |
 | Forgot Password (`/auth/forgot-password`) | Saisie email, envoi lien de réinitialisation par Supabase, page de reset. |
+
+**Flow d'accès depuis le site public :**
+1. Le client clique sur "Espace Client" dans la navbar publique
+2. S'il n'est pas connecté → redirection vers `/auth/login`
+3. S'il est déjà connecté → le bouton se transforme en menu avatar avec accès direct à : Dashboard, Projets, Facturation, Profil, Déconnexion
+4. Après connexion réussie → redirection vers `/dashboard`
+5. Après déconnexion → retour à la page d'accueil du site public (`/`)
 
 **Sécurité :**
 - Sessions JWT avec refresh automatique des tokens
@@ -574,6 +585,7 @@ L'authentification est gérée par Supabase Auth avec support OAuth Google. L'in
 - Redirection automatique vers `/auth/login` si non authentifié
 - Protection CSRF intégrée
 - Rate limiting sur les tentatives de connexion
+- La session auth est partagée entre le site public et l'espace client (même domaine, même cookie)
 
 ---
 
@@ -583,8 +595,15 @@ L'authentification est gérée par Supabase Auth avec support OAuth Google. L'in
 
 | Zone | Desktop | Tablet | Mobile |
 |------|---------|--------|--------|
-| Site Public | Navbar fixe en haut + méga-menu services | Navbar + menu hamburger | Menu hamburger plein écran |
+| Site Public | Navbar fixe en haut + méga-menu services + bouton "Espace Client" (coin droit) | Navbar + menu hamburger + bouton "Espace Client" | Menu hamburger plein écran + lien "Espace Client" en haut du menu |
 | Espace Client | Sidebar permanente à gauche | Sidebar rétractable | Bottom navigation bar (5 icônes) |
+
+**Bouton "Espace Client" dans la navbar publique :**
+- Positionné à l'extrême droite de la navbar, après les liens de navigation et le CTA principal
+- **Visiteur non connecté** : le bouton affiche "Espace Client" et redirige vers `/auth/login`
+- **Client connecté** : le bouton affiche l'avatar/initiales du client avec un dropdown menu proposant : "Mon Dashboard", "Mes Projets", "Facturation", "Mon Profil", "Se déconnecter"
+- Le bouton est visible sur toutes les pages du site public, y compris en version mobile (dans le menu hamburger)
+- Style : bouton secondaire (outline) pour ne pas entrer en conflit visuel avec le CTA principal ("Audit gratuit")
 
 ### 6.2 Design System
 

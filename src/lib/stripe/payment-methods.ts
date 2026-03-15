@@ -3,9 +3,6 @@ import { stripe } from "./client"
 import { createClient } from "@/lib/supabase/server"
 import type { PaymentMethodType } from "@/types"
 
-/**
- * Maps a Stripe payment method type to our local PaymentMethodType enum.
- */
 function mapPaymentMethodType(
   stripeType: string
 ): PaymentMethodType {
@@ -18,11 +15,10 @@ function mapPaymentMethodType(
  */
 export async function syncPaymentMethods(
   stripeCustomerId: string,
-  orgId: string
+  userId: string
 ): Promise<void> {
   const supabase = await createClient()
 
-  // Fetch cards and SEPA payment methods from Stripe
   const [cards, sepa] = await Promise.all([
     stripe.paymentMethods.list({
       customer: stripeCustomerId,
@@ -36,7 +32,6 @@ export async function syncPaymentMethods(
 
   const allMethods = [...cards.data, ...sepa.data]
 
-  // Retrieve the customer to know the default payment method
   const customer = (await stripe.customers.retrieve(
     stripeCustomerId
   )) as Stripe.Customer
@@ -47,16 +42,15 @@ export async function syncPaymentMethods(
       : customer.invoice_settings?.default_payment_method?.id ?? null
 
   if (allMethods.length === 0) {
-    // Remove any orphaned local records
     await supabase
       .from("payment_methods")
       .delete()
-      .eq("org_id", orgId)
+      .eq("user_id", userId)
     return
   }
 
   const records = allMethods.map((pm: Stripe.PaymentMethod) => ({
-    org_id: orgId,
+    user_id: userId,
     stripe_payment_method_id: pm.id,
     type: mapPaymentMethodType(pm.type),
     brand: pm.card?.brand ?? pm.sepa_debit?.bank_code ?? null,
@@ -66,7 +60,6 @@ export async function syncPaymentMethods(
     is_default: pm.id === defaultPmId,
   }))
 
-  // Upsert by stripe_payment_method_id (unique constraint)
   await supabase.from("payment_methods").upsert(records, {
     onConflict: "stripe_payment_method_id",
     ignoreDuplicates: false,
@@ -82,27 +75,26 @@ export async function setDefaultPaymentMethod(
 ): Promise<void> {
   const supabase = await createClient()
 
-  // Update default on Stripe
   await stripe.customers.update(stripeCustomerId, {
     invoice_settings: {
       default_payment_method: paymentMethodId,
     },
   })
 
-  // Get the org_id from the local payment method record
+  // Get the user_id from the local payment method record
   const { data: pm } = await supabase
     .from("payment_methods")
-    .select("org_id")
+    .select("user_id")
     .eq("stripe_payment_method_id", paymentMethodId)
     .single()
 
   if (!pm) return
 
-  // Reset all payment methods for this org to non-default
+  // Reset all payment methods for this user to non-default
   await supabase
     .from("payment_methods")
     .update({ is_default: false })
-    .eq("org_id", pm.org_id)
+    .eq("user_id", pm.user_id)
 
   // Set the selected one as default
   await supabase
@@ -119,10 +111,8 @@ export async function detachPaymentMethod(
 ): Promise<void> {
   const supabase = await createClient()
 
-  // Detach from Stripe
   await stripe.paymentMethods.detach(paymentMethodId)
 
-  // Remove from local DB
   await supabase
     .from("payment_methods")
     .delete()

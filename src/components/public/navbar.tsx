@@ -17,6 +17,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { MobileNav } from "@/components/public/mobile-nav"
+import { UserNavButton } from "@/components/public/user-nav-button"
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -114,11 +115,12 @@ export function Navbar() {
           </NavigationMenu>
         </div>
 
-        {/* Desktop CTA */}
-        <div className="hidden lg:block">
+        {/* Desktop CTA + Espace Client */}
+        <div className="hidden lg:flex lg:items-center lg:gap-3">
           <Button render={<Link href="/audit-gratuit" />}>
             Audit Gratuit
           </Button>
+          <UserNavButton scrolled={scrolled} />
         </div>
 
         {/* Mobile hamburger */}

@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { FolderOpen } from "lucide-react"
 
-import { getUserOrganization } from "@/lib/queries/organizations"
 import { getProjects } from "@/lib/queries/projects"
 import { PageHeader } from "@/components/shared/page-header"
 import { EmptyState } from "@/components/shared/empty-state"
@@ -23,8 +22,7 @@ export default async function ProjectsPage() {
     redirect("/auth/login")
   }
 
-  const userOrg = await getUserOrganization(user.id)
-  const projects = userOrg ? await getProjects(userOrg.organization.id) : []
+  const projects = await getProjects(user.id)
 
   return (
     <div>
@@ -40,7 +38,7 @@ export default async function ProjectsPage() {
 
       {projects.length === 0 ? (
         <EmptyState
-          icon={FolderOpen}
+          icon={<FolderOpen className="h-8 w-8 text-muted-foreground" />}
           title="Aucun projet pour le moment"
           description="Vous n'avez pas encore de projet. Contactez-nous pour discuter de votre prochain projet web."
           actionLabel="Demander un devis"

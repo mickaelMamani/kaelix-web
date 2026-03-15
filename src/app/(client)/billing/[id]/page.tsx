@@ -8,7 +8,6 @@ import {
   CheckCircle2,
 } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
-import { getUserOrganization } from "@/lib/queries/organizations"
 import { getInvoice } from "@/lib/queries/billing"
 import { PageHeader } from "@/components/shared/page-header"
 import { StatusBadge } from "@/components/shared/status-badge"
@@ -57,14 +56,7 @@ export default async function InvoiceDetailPage({
     redirect("/auth/login")
   }
 
-  const userOrg = await getUserOrganization(user.id)
-
-  if (!userOrg) {
-    redirect("/dashboard")
-  }
-
-  const orgId = userOrg.organization.id
-  const invoice = await getInvoice(id, orgId)
+  const invoice = await getInvoice(id, user.id)
 
   if (!invoice) {
     notFound()

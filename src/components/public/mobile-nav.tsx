@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetFooter,
 } from "@/components/ui/sheet"
+import { MobileUserNav } from "@/components/public/user-nav-button"
 
 interface MobileNavProps {
   open: boolean
@@ -34,6 +35,9 @@ export function MobileNav({ open, onOpenChange }: MobileNavProps) {
             {siteConfig.name}
           </SheetTitle>
         </SheetHeader>
+
+        {/* Espace Client section */}
+        <MobileUserNav onNavigate={handleLinkClick} />
 
         <nav className="flex flex-col gap-1 px-4">
           {navItems.map((item) => {
