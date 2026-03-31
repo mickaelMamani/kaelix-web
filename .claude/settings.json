@@ -18,5 +18,8 @@
     "next-devtools",
     "playwright"
   ],
-  "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+  "enabledPlugins": {
+    "saas-toolkit@saas-claude-marketplace": true
+  }
 }
