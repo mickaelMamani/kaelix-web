@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { AuthCard } from "@/components/auth/auth-card"
 import { Button } from "@/components/ui/button"
@@ -13,6 +13,44 @@ export function SetPasswordForm() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [sessionReady, setSessionReady] = useState(false)
+
+  // Process hash fragment tokens from Supabase invite/recovery redirects
+  useEffect(() => {
+    const supabase = createClient()
+    const hash = window.location.hash
+
+    if (hash && hash.includes("access_token")) {
+      const params = new URLSearchParams(hash.substring(1))
+      const accessToken = params.get("access_token")
+      const refreshToken = params.get("refresh_token")
+
+      if (accessToken && refreshToken) {
+        supabase.auth
+          .setSession({ access_token: accessToken, refresh_token: refreshToken })
+          .then(({ error }) => {
+            if (error) {
+              setError("Le lien d'invitation a expiré ou est invalide.")
+            } else {
+              // Clean hash from URL
+              window.history.replaceState(null, "", window.location.pathname)
+              setSessionReady(true)
+            }
+          })
+      } else {
+        setSessionReady(true)
+      }
+    } else {
+      // No hash — check if there's already an active session
+      supabase.auth.getUser().then(({ data }) => {
+        if (data.user) {
+          setSessionReady(true)
+        } else {
+          setError("Aucune session active. Veuillez utiliser le lien reçu par email.")
+        }
+      })
+    }
+  }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -58,6 +96,12 @@ export function SetPasswordForm() {
           </div>
         )}
 
+        {!sessionReady && !error && (
+          <div className="text-center text-sm text-muted-foreground">
+            Vérification en cours...
+          </div>
+        )}
+
         <div className="flex flex-col gap-2">
           <Label htmlFor="password">Mot de passe</Label>
           <Input
@@ -80,7 +124,7 @@ export function SetPasswordForm() {
           />
         </div>
 
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button type="submit" className="w-full" disabled={loading || !sessionReady}>
           {loading ? "Activation en cours..." : "Activer mon compte"}
         </Button>
       </form>
