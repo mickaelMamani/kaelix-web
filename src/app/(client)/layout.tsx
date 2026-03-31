@@ -42,7 +42,7 @@ export default async function ClientLayout({
           {children}
         </main>
       </div>
-      <MobileBottomNav />
+      <MobileBottomNav isAdmin={userData.isAdmin} />
     </div>
   )
 }

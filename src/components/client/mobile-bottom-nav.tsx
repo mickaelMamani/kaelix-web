@@ -8,6 +8,7 @@ import {
   CreditCard,
   MessageSquare,
   User,
+  Shield,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -21,7 +22,11 @@ const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>
   User,
 }
 
-export function MobileBottomNav() {
+interface MobileBottomNavProps {
+  isAdmin?: boolean
+}
+
+export function MobileBottomNav({ isAdmin }: MobileBottomNavProps) {
   const pathname = usePathname()
 
   return (
@@ -30,7 +35,19 @@ export function MobileBottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div className="flex items-center justify-around">
-        {clientNavItems.map((item) => {
+        {isAdmin && (
+          <Link
+            href="/admin/dashboard"
+            className={cn(
+              "flex flex-1 flex-col items-center gap-1 py-2 text-xs transition-colors",
+              pathname.startsWith("/admin") ? "text-kaelix-blue" : "text-muted-foreground"
+            )}
+          >
+            <Shield className="size-6" />
+            <span>Admin</span>
+          </Link>
+        )}
+        {clientNavItems.slice(0, isAdmin ? 4 : undefined).map((item) => {
           const Icon = iconMap[item.icon]
           const isActive = pathname.startsWith(item.href)
 
