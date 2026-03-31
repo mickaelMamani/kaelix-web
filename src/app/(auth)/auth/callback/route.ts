@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { getOrCreateStripeCustomer } from "@/lib/stripe/customers";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -12,6 +13,19 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
+      // Ensure a Stripe customer exists for this user
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const name =
+          user.user_metadata?.full_name || user.email || "Client Kaelix";
+        getOrCreateStripeCustomer(user.id, user.email!, name).catch(
+          console.error
+        );
+      }
+
       const forwardedHost = request.headers.get("x-forwarded-host");
       const isLocalEnv = process.env.NODE_ENV === "development";
 
