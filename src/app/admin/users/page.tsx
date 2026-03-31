@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { UserRowActions } from "@/components/admin/users/user-row-actions"
 
 export const metadata = {
   title: "Utilisateurs — Admin Kaelix",
@@ -25,10 +26,12 @@ export default async function AdminUsersPage() {
   const { data: authData } = await supabaseAdmin.auth.admin.listUsers()
   const authUsers = authData?.users ?? []
 
-  // Build email lookup map
+  // Build email + confirmation lookup maps
   const emailMap = new Map<string, string>()
+  const confirmedMap = new Map<string, boolean>()
   for (const u of authUsers) {
     emailMap.set(u.id, u.email ?? "")
+    confirmedMap.set(u.id, !!u.email_confirmed_at)
   }
 
   // Fetch profiles via server client (admin RLS policy)
@@ -55,6 +58,7 @@ export default async function AdminUsersPage() {
     ...profile,
     email: emailMap.get(profile.id) ?? "",
     projectCount: countMap.get(profile.id) ?? 0,
+    hasConfirmed: confirmedMap.get(profile.id) ?? false,
   }))
 
   return (
@@ -89,13 +93,20 @@ export default async function AdminUsersPage() {
                 <TableHead>Rôle</TableHead>
                 <TableHead>Projets</TableHead>
                 <TableHead>Inscrit le</TableHead>
+                <TableHead>Statut</TableHead>
+                <TableHead className="w-12"><span className="sr-only">Actions</span></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {users.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">
-                    {user.full_name ?? "—"}
+                    <Link
+                      href={`/admin/users/${user.id}`}
+                      className="text-kaelix-blue hover:underline"
+                    >
+                      {user.full_name ?? "—"}
+                    </Link>
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.company ?? "—"}</TableCell>
@@ -111,6 +122,14 @@ export default async function AdminUsersPage() {
                       month: "short",
                       year: "numeric",
                     })}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={user.hasConfirmed ? "default" : "outline"}>
+                      {user.hasConfirmed ? "Actif" : "En attente"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <UserRowActions userId={user.id} hasConfirmed={user.hasConfirmed} />
                   </TableCell>
                 </TableRow>
               ))}

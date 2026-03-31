@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 export interface AdminKPIs {
   pendingProjects: number
@@ -10,7 +10,7 @@ export interface AdminKPIs {
 }
 
 export async function getAdminKPIs(): Promise<AdminKPIs> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   // Pending projects count
   const { count: pendingProjects } = await supabase
@@ -91,62 +91,72 @@ export interface ProjectWithClient {
 }
 
 export async function getPendingProjects(): Promise<ProjectWithClient[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .from("projects")
-    .select("*, profiles!projects_user_id_fkey(full_name, company)")
+    .select("*")
     .eq("status", "pending")
     .order("created_at", { ascending: false })
 
   if (error || !data) return []
 
-  return data.map((p: any) => ({
-    ...p,
-    client_name: p.profiles?.full_name ?? null,
-    client_company: p.profiles?.company ?? null,
-    admin_name: null,
-    profiles: undefined,
-  }))
+  const userIds = [...new Set(data.map((p) => p.user_id))]
+  const { data: profiles } = userIds.length
+    ? await supabase.from("profiles").select("id, full_name, company").in("id", userIds)
+    : { data: [] }
+  const profileMap = new Map((profiles ?? []).map((pr) => [pr.id, pr]))
+
+  return data.map((p) => {
+    const profile = profileMap.get(p.user_id)
+    return { ...p, client_name: profile?.full_name ?? null, client_company: profile?.company ?? null, admin_name: null }
+  })
 }
 
 export async function getInProgressProjects(): Promise<ProjectWithClient[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .from("projects")
-    .select("*, profiles!projects_user_id_fkey(full_name, company)")
+    .select("*")
     .in("status", ["discovery", "proposal", "design", "development", "review"])
     .order("updated_at", { ascending: false })
 
   if (error || !data) return []
 
-  return data.map((p: any) => ({
-    ...p,
-    client_name: p.profiles?.full_name ?? null,
-    client_company: p.profiles?.company ?? null,
-    admin_name: null,
-    profiles: undefined,
-  }))
+  const userIds = [...new Set(data.map((p) => p.user_id))]
+  const { data: profiles } = userIds.length
+    ? await supabase.from("profiles").select("id, full_name, company").in("id", userIds)
+    : { data: [] }
+  const profileMap = new Map((profiles ?? []).map((pr) => [pr.id, pr]))
+
+  return data.map((p) => {
+    const profile = profileMap.get(p.user_id)
+    return { ...p, client_name: profile?.full_name ?? null, client_company: profile?.company ?? null, admin_name: null }
+  })
 }
 
 export async function getRecentInvoices(limit = 10) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .from("invoices")
-    .select("*, profiles!invoices_user_id_fkey(full_name, company)")
+    .select("*")
     .order("created_at", { ascending: false })
     .limit(limit)
 
   if (error || !data) return []
 
-  return data.map((inv: any) => ({
-    ...inv,
-    client_name: inv.profiles?.full_name ?? null,
-    client_company: inv.profiles?.company ?? null,
-    profiles: undefined,
-  }))
+  const userIds = [...new Set(data.map((inv) => inv.user_id))]
+  const { data: profiles } = userIds.length
+    ? await supabase.from("profiles").select("id, full_name, company").in("id", userIds)
+    : { data: [] }
+  const profileMap = new Map((profiles ?? []).map((pr) => [pr.id, pr]))
+
+  return data.map((inv) => {
+    const profile = profileMap.get(inv.user_id)
+    return { ...inv, client_name: profile?.full_name ?? null, client_company: profile?.company ?? null }
+  })
 }
 
 // --- Billing KPIs & invoice queries ---
@@ -160,7 +170,7 @@ export interface AdminBillingKPIs {
 }
 
 export async function getAdminBillingKPIs(): Promise<AdminBillingKPIs> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString()
   const yearStart = new Date(new Date().getFullYear(), 0, 1).toISOString()
@@ -215,11 +225,11 @@ export async function getAdminBillingKPIs(): Promise<AdminBillingKPIs> {
 }
 
 export async function getAdminInvoices(filters?: { status?: string; search?: string }) {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   let query = supabase
     .from("invoices")
-    .select("*, profiles!invoices_user_id_fkey(full_name, company)")
+    .select("*")
     .order("created_at", { ascending: false })
 
   if (filters?.status) {
@@ -230,12 +240,16 @@ export async function getAdminInvoices(filters?: { status?: string; search?: str
 
   if (error || !data) return []
 
-  let results = data.map((inv: any) => ({
-    ...inv,
-    client_name: inv.profiles?.full_name ?? null,
-    client_company: inv.profiles?.company ?? null,
-    profiles: undefined,
-  }))
+  const userIds = [...new Set(data.map((inv) => inv.user_id))]
+  const { data: profiles } = userIds.length
+    ? await supabase.from("profiles").select("id, full_name, company").in("id", userIds)
+    : { data: [] }
+  const profileMap = new Map((profiles ?? []).map((pr) => [pr.id, pr]))
+
+  let results = data.map((inv: any) => {
+    const profile = profileMap.get(inv.user_id)
+    return { ...inv, client_name: profile?.full_name ?? null, client_company: profile?.company ?? null }
+  })
 
   if (filters?.search) {
     const s = filters.search.toLowerCase()
@@ -263,11 +277,11 @@ export interface AdminProjectFilters {
 export async function getAdminProjects(
   filters?: AdminProjectFilters
 ): Promise<ProjectWithClient[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   let query = supabase
     .from("projects")
-    .select("*, profiles!projects_user_id_fkey(full_name, company)")
+    .select("*")
     .order("created_at", { ascending: false })
 
   if (filters?.status) {
@@ -284,13 +298,26 @@ export async function getAdminProjects(
 
   if (error || !data) return []
 
-  return data.map((p: any) => ({
-    ...p,
-    client_name: p.profiles?.full_name ?? null,
-    client_company: p.profiles?.company ?? null,
-    admin_name: null,
-    profiles: undefined,
-  }))
+  // Fetch client profiles separately (projects.user_id FK points to auth.users, not profiles)
+  const userIds = [...new Set(data.map((p) => p.user_id))]
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, full_name, company")
+    .in("id", userIds)
+
+  const profileMap = new Map(
+    (profiles ?? []).map((pr) => [pr.id, pr])
+  )
+
+  return data.map((p) => {
+    const profile = profileMap.get(p.user_id)
+    return {
+      ...p,
+      client_name: profile?.full_name ?? null,
+      client_company: profile?.company ?? null,
+      admin_name: null,
+    }
+  })
 }
 
 export interface AdminProjectDetail {
@@ -326,19 +353,24 @@ export interface AdminProjectDetail {
 export async function getAdminProjectById(
   id: string
 ): Promise<AdminProjectDetail | null> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
-  // Fetch project with client profile
+  // Fetch project
   const { data: project, error: projectError } = await supabase
     .from("projects")
-    .select("*, profiles!projects_user_id_fkey(full_name, company)")
+    .select("*")
     .eq("id", id)
     .single()
 
   if (projectError || !project) return null
 
-  // Fetch deliverables, invoices, and activity in parallel
-  const [deliverableRes, invoiceRes, activityRes] = await Promise.all([
+  // Fetch client profile and related data in parallel
+  const [profileRes, deliverableRes, invoiceRes, activityRes] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("full_name, company")
+      .eq("id", project.user_id)
+      .single(),
     supabase
       .from("deliverables")
       .select("id, title, description, status, due_date, sort_order, created_at, updated_at")
@@ -359,10 +391,9 @@ export async function getAdminProjectById(
 
   const mappedProject = {
     ...project,
-    client_name: (project as any).profiles?.full_name ?? null,
-    client_company: (project as any).profiles?.company ?? null,
+    client_name: profileRes.data?.full_name ?? null,
+    client_company: profileRes.data?.company ?? null,
     admin_name: null,
-    profiles: undefined,
   }
 
   return {
@@ -373,6 +404,134 @@ export async function getAdminProjectById(
   }
 }
 
+// ---------------------------------------------------------------------------
+// Admin user detail query
+// ---------------------------------------------------------------------------
+
+export interface AdminUserDetail {
+  profile: {
+    id: string
+    full_name: string | null
+    avatar_url: string | null
+    phone: string | null
+    company: string | null
+    address: string | null
+    city: string | null
+    country: string | null
+    role: string
+    stripe_customer_id: string | null
+    notification_project_emails: boolean | null
+    notification_invoice_alerts: boolean | null
+    notification_team_messages: boolean | null
+    notification_deadline_reminders: boolean | null
+    created_at: string
+    updated_at: string
+  }
+  email: string
+  hasConfirmed: boolean
+  projects: Array<{
+    id: string
+    name: string
+    type: string
+    status: string
+    progress: number | null
+    created_at: string
+  }>
+  invoices: Array<{
+    id: string
+    amount: number
+    currency: string
+    status: string
+    due_date: string | null
+    paid_at: string | null
+    created_at: string
+  }>
+  stripe: {
+    customerId: string
+    name: string | null
+    email: string | null
+    balance: number
+    currency: string
+    created: number
+    invoiceCount: number
+    totalSpent: number
+  } | null
+}
+
+export async function getAdminUserById(
+  userId: string
+): Promise<AdminUserDetail | null> {
+  const supabase = createAdminClient()
+
+  // Fetch profile
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single()
+
+  if (profileError || !profile) return null
+
+  // Fetch auth user for email + confirmation status
+  const { data: authData } = await supabase.auth.admin.getUserById(userId)
+  const authUser = authData?.user
+
+  // Fetch projects and invoices in parallel
+  const [projectsRes, invoicesRes] = await Promise.all([
+    supabase
+      .from("projects")
+      .select("id, name, type, status, progress, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("invoices")
+      .select("id, amount, currency, status, due_date, paid_at, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false }),
+  ])
+
+  // Fetch Stripe customer info if exists
+  let stripeInfo: AdminUserDetail["stripe"] = null
+  if (profile.stripe_customer_id) {
+    try {
+      const { stripe } = await import("@/lib/stripe/client")
+      const customer = await stripe.customers.retrieve(profile.stripe_customer_id) as import("stripe").Stripe.Customer
+
+      // Get invoice stats from Stripe
+      const stripeInvoices = await stripe.invoices.list({
+        customer: profile.stripe_customer_id,
+        limit: 100,
+      })
+
+      const totalSpent = stripeInvoices.data
+        .filter((inv) => inv.status === "paid")
+        .reduce((sum, inv) => sum + (inv.amount_paid ?? 0), 0)
+
+      stripeInfo = {
+        customerId: profile.stripe_customer_id,
+        name: customer.name ?? null,
+        email: customer.email ?? null,
+        balance: customer.balance ?? 0,
+        currency: customer.currency ?? "eur",
+        created: customer.created,
+        invoiceCount: stripeInvoices.data.length,
+        totalSpent,
+      }
+    } catch {
+      // Stripe call failed — customer may have been deleted
+    }
+  }
+
+  return {
+    profile,
+    email: authUser?.email ?? "",
+    hasConfirmed: !!authUser?.email_confirmed_at,
+    projects: projectsRes.data ?? [],
+    invoices: invoicesRes.data ?? [],
+    stripe: stripeInfo,
+  }
+}
+
 export interface ActiveClient {
   id: string
   full_name: string | null
@@ -380,7 +539,7 @@ export interface ActiveClient {
 }
 
 export async function getActiveClients(): Promise<ActiveClient[]> {
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   const { data, error } = await supabase
     .from("profiles")
